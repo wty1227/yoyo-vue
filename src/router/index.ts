@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router'
+import {Layout} from "@/layout";
+
 /* Layout */
-import Layout from '@/layout'
 
 export const constantRoutes = [
     {
@@ -16,22 +17,22 @@ export const constantRoutes = [
     },
     {
         path: '/login',
-        component: () => import('@/views/login'),
+        component: () => import('@/views/login.vue'),
         hidden: true
     },
     {
         path: '/register',
-        component: () => import('@/views/register'),
+        component: () => import('@/views/register.vue'),
         hidden: true
     },
     {
         path: "/:pathMatch(.*)*",
-        component: () => import('@/views/error/404'),
+        component: () => import('@/views/error/404.vue'),
         hidden: true
     },
     {
         path: '/401',
-        component: () => import('@/views/error/401'),
+        component: () => import('@/views/error/401.vue'),
         hidden: true
     },
     {
@@ -41,7 +42,7 @@ export const constantRoutes = [
         children: [
             {
                 path: '/index',
-                component: () => import('@/views/index'),
+                component: () => import('@/views/index.vue'),
                 name: 'Index',
                 meta: { title: '首页', icon: 'dashboard', affix: true }
             }
@@ -55,7 +56,7 @@ export const constantRoutes = [
         children: [
             {
                 path: 'profile',
-                component: () => import('@/views/system/user/profile/index'),
+                component: () => import('@/views/system/user/profile/index.vue'),
                 name: 'Profile',
                 meta: { title: '个人中心', icon: 'user' }
             }
@@ -73,7 +74,7 @@ export const dynamicRoutes = [
         children: [
             {
                 path: 'role/:userId(\\d+)',
-                component: () => import('@/views/system/user/authRole'),
+                component: () => import('@/views/system/user/authRole.vue'),
                 name: 'AuthRole',
                 meta: { title: '分配角色', activeMenu: '/system/user' }
             }
@@ -87,7 +88,7 @@ export const dynamicRoutes = [
         children: [
             {
                 path: 'user/:roleId(\\d+)',
-                component: () => import('@/views/system/role/authUser'),
+                component: () => import('@/views/system/role/authUser.vue'),
                 name: 'AuthUser',
                 meta: { title: '分配用户', activeMenu: '/system/role' }
             }
@@ -101,7 +102,7 @@ export const dynamicRoutes = [
         children: [
             {
                 path: 'index/:dictId(\\d+)',
-                component: () => import('@/views/system/dict/data'),
+                component: () => import('@/views/system/dict/data.vue'),
                 name: 'Data',
                 meta: { title: '字典数据', activeMenu: '/system/dict' }
             }
@@ -115,7 +116,7 @@ export const dynamicRoutes = [
         children: [
             {
                 path: 'index/:jobId(\\d+)',
-                component: () => import('@/views/monitor/job/log'),
+                component: () => import('@/views/monitor/job/log.vue'),
                 name: 'JobLog',
                 meta: { title: '调度日志', activeMenu: '/monitor/job' }
             }
@@ -129,7 +130,7 @@ export const dynamicRoutes = [
         children: [
             {
                 path: 'index/:tableId(\\d+)',
-                component: () => import('@/views/tool/gen/editTable'),
+                component: () => import('@/views/tool/gen/editTable.vue'),
                 name: 'GenEdit',
                 meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
             }

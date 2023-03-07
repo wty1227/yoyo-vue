@@ -1,12 +1,14 @@
 import auth from '@/plugins/auth'
 import router, { constantRoutes, dynamicRoutes } from '@/router'
 import { getRouters } from '@/api/menu'
-import Layout from '@/layout/index'
-import ParentView from '@/components/ParentView'
-import InnerLink from '@/layout/components/InnerLink'
+import Layout from '@/layout/Layout.vue'
+import ParentView from '@/components/ParentView/index.vue'
+import InnerLink from '@/layout/components/InnerLink/index.vue'
+import {defineStore} from "pinia";
 
 // 匹配views里面所有的.vue文件
 const modules = import.meta.glob('./../../views/**/*.vue')
+
 
 const usePermissionStore = defineStore(
   'permission',
@@ -19,19 +21,26 @@ const usePermissionStore = defineStore(
       sidebarRouters: []
     }),
     actions: {
+      // @ts-ignore
       setRoutes(routes) {
         this.addRoutes = routes
+        // @ts-ignore
         this.routes = constantRoutes.concat(routes)
       },
+      // @ts-ignore
       setDefaultRoutes(routes) {
+        // @ts-ignore
         this.defaultRoutes = constantRoutes.concat(routes)
       },
+      // @ts-ignore
       setTopbarRoutes(routes) {
         this.topbarRouters = routes
       },
+      // @ts-ignore
       setSidebarRouters(routes) {
         this.sidebarRouters = routes
       },
+      // @ts-ignore
       generateRoutes(roles) {
         return new Promise(resolve => {
           // 向后端请求路由数据
@@ -43,7 +52,7 @@ const usePermissionStore = defineStore(
             const rewriteRoutes = filterAsyncRouter(rdata, false, true)
             const defaultRoutes = filterAsyncRouter(defaultData)
             const asyncRoutes = filterDynamicRoutes(dynamicRoutes)
-            asyncRoutes.forEach(route => { router.addRoute(route) })
+            asyncRoutes.forEach((route:any) => { router.addRoute(route) })
             this.setRoutes(rewriteRoutes)
             this.setSidebarRouters(constantRoutes.concat(sidebarRoutes))
             this.setDefaultRoutes(sidebarRoutes)
@@ -55,9 +64,9 @@ const usePermissionStore = defineStore(
     }
   })
 
-// 遍历后台传来的路由字符串，转换为组件对象
+// @ts-ignore 遍历后台传来的路由字符串，转换为组件对象
 function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
-  return asyncRouterMap.filter(route => {
+  return asyncRouterMap.filter((route:any) => {
     if (type && route.children) {
       route.children = filterChildren(route.children)
     }
@@ -82,13 +91,14 @@ function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
     return true
   })
 }
-
+// @ts-ignore
 function filterChildren(childrenMap, lastRouter = false) {
-  var children = []
+  var children:any = []
+  // @ts-ignore
   childrenMap.forEach((el, index) => {
     if (el.children && el.children.length) {
       if (el.component === 'ParentView' && !lastRouter) {
-        el.children.forEach(c => {
+        el.children.forEach((c:any) => {
           c.path = el.path + '/' + c.path
           if (c.children && c.children.length) {
             children = children.concat(filterChildren(c.children, c))
@@ -100,6 +110,7 @@ function filterChildren(childrenMap, lastRouter = false) {
       }
     }
     if (lastRouter) {
+      // @ts-ignore
       el.path = lastRouter.path + '/' + el.path
     }
     children = children.concat(el)
@@ -107,10 +118,10 @@ function filterChildren(childrenMap, lastRouter = false) {
   return children
 }
 
-// 动态路由遍历，验证是否具备权限
+// @ts-ignore 动态路由遍历，验证是否具备权限
 export function filterDynamicRoutes(routes) {
-  const res = []
-  routes.forEach(route => {
+  const res:any = []
+  routes.forEach((route:any) => {
     if (route.permissions) {
       if (auth.hasPermiOr(route.permissions)) {
         res.push(route)
@@ -124,7 +135,7 @@ export function filterDynamicRoutes(routes) {
   return res
 }
 
-export const loadView = (view) => {
+export const loadView = (view:any) => {
   let res;
   for (const path in modules) {
     const dir = path.split('views/')[1].split('.vue')[0];

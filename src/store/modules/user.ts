@@ -1,6 +1,7 @@
 import { login, logout, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import defAva from '@/assets/images/profile.jpg'
+import {defineStore} from "pinia";
 
 const useUserStore = defineStore(
   'user',
@@ -13,18 +14,18 @@ const useUserStore = defineStore(
       permissions: []
     }),
     actions: {
-      // 登录
+      // @ts-ignore 登录
       login(userInfo) {
         const username = userInfo.username.trim()
         const password = userInfo.password
         const code = userInfo.code
         const uuid = userInfo.uuid
         return new Promise((resolve, reject) => {
-          login(username, password, code, uuid).then(res => {
+          login(username, password, code, uuid).then((res: any) => {
             setToken(res.token)
             this.token = res.token
-            resolve()
-          }).catch(error => {
+            resolve(res)
+          }).catch((error:any) => {
             reject(error)
           })
         })
@@ -32,7 +33,7 @@ const useUserStore = defineStore(
       // 获取用户信息
       getInfo() {
         return new Promise((resolve, reject) => {
-          getInfo().then(res => {
+          getInfo().then((res: any) => {
             const user = res.user
             const avatar = (user.avatar == "" || user.avatar == null) ? defAva : import.meta.env.VITE_APP_BASE_API + user.avatar;
 
@@ -40,12 +41,13 @@ const useUserStore = defineStore(
               this.roles = res.roles
               this.permissions = res.permissions
             } else {
+              // @ts-ignore
               this.roles = ['ROLE_DEFAULT']
             }
             this.name = user.userName
             this.avatar = avatar;
             resolve(res)
-          }).catch(error => {
+          }).catch((error:any) => {
             reject(error)
           })
         })
@@ -53,13 +55,13 @@ const useUserStore = defineStore(
       // 退出系统
       logOut() {
         return new Promise((resolve, reject) => {
-          logout(this.token).then(() => {
+          logout(/*this.token*/).then(() => {
             this.token = ''
             this.roles = []
             this.permissions = []
             removeToken()
-            resolve()
-          }).catch(error => {
+            resolve(null);
+          }).catch((error:any) => {
             reject(error)
           })
         })

@@ -1,10 +1,16 @@
-import Cookies from 'js-cookie'
+
+import {defineStore} from "pinia";
+// @ts-ignore
+import Cookies from "js-cookie";
+
 
 const useAppStore = defineStore(
   'app',
   {
     state: () => ({
       sidebar: {
+        // opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
+        // @ts-ignore
         opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
         withoutAnimation: false,
         hide: false
@@ -13,6 +19,7 @@ const useAppStore = defineStore(
       size: Cookies.get('size') || 'default'
     }),
     actions: {
+      // @ts-ignore
       toggleSideBar(withoutAnimation) {
         if (this.sidebar.hide) {
           return false;
@@ -20,23 +27,27 @@ const useAppStore = defineStore(
         this.sidebar.opened = !this.sidebar.opened
         this.sidebar.withoutAnimation = withoutAnimation
         if (this.sidebar.opened) {
-          Cookies.set('sidebarStatus', 1)
+          Cookies.set('sidebarStatus', "1")
         } else {
-          Cookies.set('sidebarStatus', 0)
+          Cookies.set('sidebarStatus', "0")
         }
       },
+      // @ts-ignore
       closeSideBar({ withoutAnimation }) {
-        Cookies.set('sidebarStatus', 0)
+        Cookies.set('sidebarStatus', "0")
         this.sidebar.opened = false
         this.sidebar.withoutAnimation = withoutAnimation
       },
+      // @ts-ignore
       toggleDevice(device) {
         this.device = device
       },
+      // @ts-ignore
       setSize(size) {
         this.size = size;
         Cookies.set('size', size)
       },
+      // @ts-ignore
       toggleSideBarHide(status) {
         this.sidebar.hide = status
       }

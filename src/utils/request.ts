@@ -4,10 +4,11 @@ import { getToken } from '@/utils/auth.js'
 import errorCode from '@/utils/errorCode.js'
 import { tansParams, blobValidate } from '@/utils/ruoyi'
 import cache from '@/plugins/cache'
-import { saveAs } from 'file-saver'
+// @ts-ignore
+import { saveAs } from 'file-saver';
 import useUserStore from '@/store/modules/user'
 
-let downloadLoadingInstance;
+let downloadLoadingInstance:any;
 // 是否显示重新登录
 export let isRelogin = { show: false };
 
@@ -70,7 +71,8 @@ service.interceptors.response.use(res => {
     // 未设置状态码则默认成功状态
     const code = res.data.code || 200;
     // 获取错误信息
-    const msg = errorCode[code] || res.data.msg || errorCode['default']
+    // @ts-ignore
+      const msg = errorCode[code] || res.data.msg || errorCode['default']
     // 二进制数据则直接返回
     if(res.request.responseType ===  'blob' || res.request.responseType ===  'arraybuffer'){
       return res.data
@@ -117,6 +119,7 @@ service.interceptors.response.use(res => {
 )
 
 // 通用下载方法
+// @ts-ignore
 export function download(url, params, filename, config) {
   downloadLoadingInstance = ElLoading.service({ text: "正在下载数据，请稍候", background: "rgba(0, 0, 0, 0.7)", })
   return service.post(url, params, {
@@ -127,11 +130,14 @@ export function download(url, params, filename, config) {
   }).then(async (data) => {
     const isLogin = await blobValidate(data);
     if (isLogin) {
+      // @ts-ignore
       const blob = new Blob([data])
       saveAs(blob, filename)
     } else {
+      // @ts-ignore
       const resText = await data.text();
       const rspObj = JSON.parse(resText);
+      // @ts-ignore
       const errMsg = errorCode[rspObj.code] || rspObj.msg || errorCode['default']
       ElMessage.error(errMsg);
     }
