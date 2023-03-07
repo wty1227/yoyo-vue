@@ -1,0 +1,35 @@
+{
+  "name": "yoyo-vue",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --mode development",
+    "build": "vite build --mode production",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "2.0.10",
+    "axios": "^1.1.3",
+    "core-js": "^3.6.5",
+    "dayjs": "^1.11.6",
+    "element-plus": "2.2.27",
+    "js-cookie": "^3.0.1",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.0.23",
+    "unplugin-icons": "^0.15.3",
+    "unplugin-vue-components": "^0.22.11",
+    "vue": "^3.2.41",
+    "vue-router": "4.1.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.2.0",
+    "typescript": "^4.6.4",
+    "unplugin-auto-import": "0.11.4",
+    "vite": "^3.2.3",
+    "vite-plugin-compression": "0.5.1",
+    "vite-plugin-svg-icons": "2.0.1",
+    "vite-plugin-vue-setup-extend": "0.4.0",
+    "vue-tsc": "^1.0.9"
+  }
+}
