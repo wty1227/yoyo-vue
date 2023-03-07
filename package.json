@@ -17,6 +17,7 @@
     "js-cookie": "^3.0.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.23",
+    "store": "^2.0.12",
     "unplugin-icons": "^0.15.3",
     "unplugin-vue-components": "^0.22.11",
     "vue": "^3.2.41",
