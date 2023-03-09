@@ -14,8 +14,8 @@ export default function createVitePlugins(viteEnv:any, isBuild = false) {
     const vitePlugins = [vue()]
     vitePlugins.push(createAutoImport())
     vitePlugins.push(createAutoImportComponents())
-    vitePlugins.push(createSetupExtend())
+    // vitePlugins.push(createSetupExtend())
     vitePlugins.push(createSvgIcon(isBuild))
-    isBuild && vitePlugins.push(...createCompression(viteEnv))
+    // isBuild && vitePlugins.push(...createCompression(viteEnv))
     return vitePlugins
 }

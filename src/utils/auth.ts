@@ -1,3 +1,4 @@
+// @ts-ignore
 import ls from 'store'
 const TokenKey = 'Admin-Token'
 
