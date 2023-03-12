@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import { listForm, getForm, delForm, addForm, updateForm, exportForm } from "@/api/flowable/form.js";
+import { listForm, getForm, delForm, addForm, updateForm, exportForm } from "@/api/flowable/form.ts";
 import Editor from '@/components/Editor';
 import Parser from '@/components/parser/Parser'
 export default {

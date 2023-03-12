@@ -1,3 +1,5 @@
+import {defineStore} from "pinia";
+
 const useDictStore = defineStore(
   'dict',
   {
@@ -5,7 +7,7 @@ const useDictStore = defineStore(
       dict: new Array()
     }),
     actions: {
-      // 获取字典
+      // @ts-ignore 获取字典
       getDict(_key) {
         if (_key == null && _key == "") {
           return null;
@@ -20,7 +22,7 @@ const useDictStore = defineStore(
           return null;
         }
       },
-      // 设置字典
+      // @ts-ignore 设置字典
       setDict(_key, value) {
         if (_key !== null && _key !== "") {
           this.dict.push({
@@ -29,7 +31,7 @@ const useDictStore = defineStore(
           });
         }
       },
-      // 删除字典
+      // @ts-ignore 删除字典
       removeDict(_key) {
         var bln = false;
         try {

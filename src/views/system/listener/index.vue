@@ -74,23 +74,28 @@
 
     <el-table v-loading="loading" :data="listenerList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
+<!--      <el-table-column label="主键" align="center" prop="id"/>-->
       <el-table-column label="名称" align="center" prop="name"/>
       <el-table-column label="监听类型" align="center" prop="type">
-        <template slot-scope="scope">
+        <template #default="scope">
           <dict-tag :options="sys_listener_type" :value="scope.row.type"/>
         </template>
       </el-table-column>
       <el-table-column label="事件类型" align="center" prop="eventType"/>
-      <el-table-column label="值类型" align="center" prop="valueType">
-        <template slot-scope="scope">
+      <el-table-column label="值类型" align="center" prop="valueType" width="100">
+        <template #default="scope">
           <dict-tag :options="sys_listener_value_type" :value="scope.row.valueType"/>
         </template>
       </el-table-column>
       <el-table-column label="执行内容" align="center" prop="value"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:notice:edit']">修改</el-button>
-          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['system:notice:remove']" >删除</el-button>
+          <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)"
+                     v-hasPermi="['system:notice:edit']">修改
+          </el-button>
+          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
+                     v-hasPermi="['system:notice:remove']">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -104,8 +109,8 @@
     />
 
     <!-- 添加或修改流程监听对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="listenerForm" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
+      <el-form ref="listenerRef" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
@@ -162,10 +167,11 @@
 </template>
 
 <script setup name="Listener">
-import {listListener, getListener, delListener, addListener, updateListener} from "@/api/system/listener";
-import {getCurrentInstance, onMounted, reactive, toRefs} from "vue";
+import {getCurrentInstance, reactive} from "vue";
 
 const {proxy} = getCurrentInstance();
+import {listListener, getListener, delListener, addListener, updateListener} from "@/api/system/listener.ts";
+
 const {
   sys_listener_value_type,
   sys_listener_type,
@@ -175,16 +181,13 @@ const {
 
 const listenerList = ref([]);
 const open = ref(false);
-// 遮罩层
 const loading = ref(true);
 const showSearch = ref(true);
 const ids = ref([]);
 const single = ref(true);
 const multiple = ref(true);
-// 总条数
 const total = ref(0);
 const title = ref("");
-
 
 const data = reactive({
   // 遮罩层
@@ -232,30 +235,29 @@ const data = reactive({
     {label: 'take', value: 'take'},
   ],
 })
-const { queryParams, form, rules, taskListenerEventList, executionListenerEventList } = toRefs(data);
+const {queryParams, form, rules, taskListenerEventList, executionListenerEventList} = toRefs(data);
 
-onMounted(() => {
-  getList();
-})
 
 /** 查询流程监听列表 */
-const getList = () => {
+function getList() {
   loading.value = true;
   listListener(queryParams).then(response => {
-    // console.log(response)
-    // debugger
+    console.log('listener:', response)
+    console.log(response.rows)
     listenerList.value = response.rows;
     total.value = response.total;
     loading.value = false;
   });
 }
+
 // 取消按钮
-const cancel = () => {
+function cancel() {
   open.value = false;
   reset();
 }
+
 // 表单重置
-const reset = () => {
+function reset() {
   form.value = {
     id: null,
     name: null,
@@ -267,37 +269,42 @@ const reset = () => {
     updateTime: null,
     createBy: null,
     updateBy: null,
-    status: null,
+    status: 0,
     remark: null
   };
-  proxy.resetForm("listenerForm");
+  proxy.resetForm("listenerRef");
 }
+
 /** 搜索按钮操作 */
-const handleQuery = () => {
+function handleQuery() {
   queryParams.pageNum = 1;
   getList();
 }
+
 /** 重置按钮操作 */
-const resetQuery = () => {
-  proxy.resetForm("queryRef");
+function resetQuery() {
+  proxy.resetForm("queryForm");
   handleQuery();
 }
+
 // 多选框选中数据
-const handleSelectionChange = (selection) => {
-  debugger
+function handleSelectionChange(selection) {
+  // debugger
   ids.value = selection.map(item => item.id)
   single.value = selection.length !== 1
   multiple.value = !selection.length
 }
+
 /** 新增按钮操作 */
-const handleAdd = () => {
-  debugger
+function handleAdd() {
+  // debugger
   reset();
   open.value = true;
   title.value = "添加流程监听";
 }
+
 /** 修改按钮操作 */
-const handleUpdate = (row) => {
+function handleUpdate(row) {
   reset();
   const id = row.id || ids.value
   getListener(id).then(response => {
@@ -306,12 +313,13 @@ const handleUpdate = (row) => {
     title.value = "修改流程监听";
   });
 }
+
 /** 提交按钮 */
-const submitForm = () => {
+function submitForm() {
   proxy.$refs["form"].validate(valid => {
     if (valid) {
       if (form.value.id != null) {
-        updateListener(form).then(response => {
+        updateListener(form.value).then(response => {
           proxy.$modal.msgSuccess("修改成功");
           open.value = false;
           getList();
@@ -326,9 +334,10 @@ const submitForm = () => {
     }
   });
 }
+
 /** 删除按钮操作 */
-const handleDelete = (row) => {
-  const ids = row.id || ids;
+function handleDelete(row) {
+  const ids = row.id || ids.value;
   proxy.$modal.confirm('是否确认删除流程监听编号为"' + ids + '"的数据项？').then(function () {
     return delListener(ids);
   }).then(() => {
@@ -337,11 +346,13 @@ const handleDelete = (row) => {
   }).catch(() => {
   });
 }
+
 /** 导出按钮操作 */
-const handleExport = () => {
+function handleExport() {
   download('system/listener/export', {
     ...queryParams
   }, `listener_${new Date().getTime()}.xlsx`)
 }
-// getList();
+
+getList();
 </script>

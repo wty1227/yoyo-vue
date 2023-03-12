@@ -6,9 +6,10 @@ import {toRefs, ref} from "vue";
 /**
  * 获取字典数据
  */
-export function useDict(...args) {
+export function useDict(...args:any) {
   const res = ref({});
   return (() => {
+    // @ts-ignore
     args.forEach((dictType, index) => {
       // @ts-ignore
       res.value[dictType] = [];

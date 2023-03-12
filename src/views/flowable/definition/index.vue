@@ -247,7 +247,7 @@ import {
   flowXmlAndNode
 } from "@/api/flowable/definition.js";
 import { getToken } from "@/utils/auth";
-import { getForm, addDeployForm ,listForm } from "@/api/flowable/form.js";
+import { getForm, addDeployForm ,listForm } from "@/api/flowable/form.ts";
 import Parser from '@/components/parser/Parser'
 import flow from '@/views/flowable/task/myProcess/send/flow'
 import Model from './model';
