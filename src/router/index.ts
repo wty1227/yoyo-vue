@@ -36,6 +36,11 @@ export const constantRoutes = [
         hidden: true
     },
     {
+        path: '/test',
+        component: () => import('@/views/error/test.vue'),
+        hidden: true
+    },
+    {
         path: '',
         component: Layout,
         redirect: '/index',
@@ -61,7 +66,85 @@ export const constantRoutes = [
                 meta: { title: '个人中心', icon: 'user' }
             }
         ]
-    }
+    },
+    {
+        path: '/flowable',
+        component: Layout,
+        hidden: true,
+        children: [
+            {
+                path: 'definition/model/',
+                component: () => import('@/views/flowable/definition/model.vue'),
+                name: 'Model',
+                meta: { title: '流程设计', icon: '' }
+            }
+        ]
+    },
+    {
+        path: '/flowable',
+        component: Layout,
+        hidden: true,
+        children: [
+            {
+                path: 'task/finished/detail/index',
+                component: () => import('@/views/flowable/task/finished/detail/index.vue'),
+                name: 'FinishedRecord',
+                meta: { title: '流程详情', icon: '' }
+            }
+        ]
+    },
+    {
+        path: '/flowable',
+        component: Layout,
+        hidden: true,
+        children: [
+            {
+                path: 'task/myProcess/detail/index',
+                component: () => import('@/views/flowable/task/myProcess/detail/index.vue'),
+                name: 'MyProcessRecord',
+                meta: { title: '流程详情', icon: '' }
+            }
+        ]
+    },
+    {
+        path: '/flowable',
+        component: Layout,
+        hidden: true,
+        children: [
+            {
+                path: 'task/myProcess/send/index',
+                component: () => import('@/views/flowable/task/myProcess/send/index.vue'),
+                name: 'SendRecord',
+                meta: { title: '流程发起', icon: '' }
+            }
+        ]
+    },
+    {
+        path: '/flowable',
+        component: Layout,
+        hidden: true,
+        children: [
+            {
+                path: 'task/todo/detail/index',
+                component: () => import('@/views/flowable/task/todo/detail/index.vue'),
+                name: 'TodoRecord',
+                meta: { title: '流程处理', icon: '' }
+            }
+        ]
+    },
+    {
+        path: '/tool',
+        component: Layout,
+        hidden: true,
+        children: [
+            {
+                path: 'build/index',
+                component: () => import('@/views/tool/build/index.vue'),
+                name: 'FormBuild',
+                meta: { title: '表单配置', icon: '' }
+            }
+        ]
+    },
 ]
 
 // 动态路由，基于用户权限动态去加载

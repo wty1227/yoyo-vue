@@ -1,6 +1,6 @@
 <template>
 
-<!--  <v-form-designer ref="vfdRef">  </v-form-designer>-->
+  <!--  <v-form-designer ref="vfdRef">  </v-form-designer>-->
   <v-form-designer ref="vfDesigner" :field-list-api="fieldListApi" :banned-widgets="testBanned"
                    :designer-config="designerConfig">
     <!-- 自定义按钮插槽演示 -->
@@ -32,16 +32,13 @@
 
 <script setup>
 import {getForm, addForm, updateForm} from "@/api/flowable/form";
-import {
-  getDrawingList, saveDrawingList, getIdGlobal, saveIdGlobal, getFormConf
-} from '@/utils/db'
 
-import {ref, reactive} from 'vue'
+import { ref, reactive } from 'vue'
+import { ElMessage } from 'element-plus'
+
 const { proxy } = getCurrentInstance();
 const formTitle = ref("")
 const formOpen = ref(false);
-let idGlobal = getIdGlobal()
-
 
 const data = reactive({
   form: {
@@ -70,32 +67,19 @@ const fieldListApi = reactive({
   nameKey: 'fieldName'
 })
 const testBanned = ref([
-  // 'sub-form',
-  // 'alert',
+  //'sub-form',
+  //'alert',
 ])
 const designerConfig = reactive({
   languageMenu: true,
-  //externalLink: false,
+  externalLink: false,
   //formTemplates: false,
   //eventCollapse: false,
   //clearDesignerButton: false,
   //previewFormButton: false,
   generateSFCButton: false
-  //presetCssCode: '.abc { font-size: 16px; }',
-})
 
-onMounted(() => {
-  const formId =  proxy.$route.query && proxy.$route.query.formId;
-  if (formId) {
-    getForm(formId).then(res =>{
-      // that.formConf = JSON.parse(res.data.formContent);
-      // that.drawingList = that.formConf.fields;
-      form.value = res.data;
-    })
-  }else {
-    // 初始化表单设计器
-    vfDesigner.value.clearDesigner();
-  }
+  //presetCssCode: '.abc { font-size: 16px; }',
 })
 /** 表单基本信息 */
 const handleForm = () => {
@@ -106,11 +90,10 @@ const handleForm = () => {
   //   fields: deepClone(this.drawingList),
   //   ...this.formConf
   // }
-  form.value.formContent =  JSON.stringify(formJson);
+  form.value.formContent = formJson // JSON.stringify(this.formData);
   formOpen.value = true;
   formTitle.value = "添加表单";
-  console.log('json:', formJson)
-  console.log('form:', form)
+
   // ElMessage.success('表单已保存！')
 }
 // 表单重置
@@ -125,28 +108,28 @@ function reset() {
 }
 // 取消按钮
 function cancel() {
-  formOpen.value = false;
-  reset();
+  this.formOpen = false;
+  this.reset();
 }
 /** 保存表单信息 */
 function submitForm(){
   proxy.$refs["tabNameRef"].validate(valid => {
     if (valid) {
-      if (form.value.formId != null) {
+      if (this.form.formId != null) {
         updateForm(this.form).then(response => {
-          proxy.$modal.msgSuccess("修改成功");
+          this.$modal.msgSuccess("修改成功");
         });
       } else {
-        addForm(form.value).then(response => {
-          proxy.$modal.msgSuccess("新增成功");
+        addForm(this.form).then(response => {
+          this.$modal.msgSuccess("新增成功");
         });
       }
-      // this.drawingList = []
-      idGlobal = 100
-      open.value = false;
+      this.drawingList = []
+      this.idGlobal = 100
+      this.open = false;
       // 关闭当前标签页并返回上个页面
       const obj = { path: "/flowable/form", query: { t: Date.now()} };
-      proxy.$tab.closeOpenPage(obj);
+      this.$tab.closeOpenPage(obj);
     }
   });
 }

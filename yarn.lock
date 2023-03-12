@@ -2443,6 +2443,11 @@
   "resolved" "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   "version" "1.1.2"
 
+"vform3-builds@^3.0.10":
+  "integrity" "sha512-sULNk72Z6NG94X9MMgpBwinaIOYjtl7Bn5jZbV9iZaglSYr2SHm/wpXPAjl8F8OW6SzOOJgIpRek+NvOvN7wsg=="
+  "resolved" "https://registry.npmmirror.com/vform3-builds/-/vform3-builds-3.0.10.tgz"
+  "version" "3.0.10"
+
 "vite-plugin-compression@0.5.1":
   "integrity" "sha512-5QJKBDc+gNYVqL/skgFAP81Yuzo9R+EAf19d+EtsMF/i8kFUpNi3J/H01QD3Oo8zBQn+NzoCIFkpPLynoOzaJg=="
   "resolved" "https://registry.npmjs.org/vite-plugin-compression/-/vite-plugin-compression-0.5.1.tgz"

@@ -24,6 +24,7 @@
     "store": "^2.0.12",
     "unplugin-icons": "^0.15.3",
     "unplugin-vue-components": "^0.22.11",
+    "vform3-builds": "^3.0.10",
     "vue": "^3.2.41",
     "vue-router": "4.1.4"
   },
