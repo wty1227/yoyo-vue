@@ -142,11 +142,11 @@ import {listForm, getForm, delForm, addForm, updateForm, exportForm} from "@/api
 // import Parser from '@/components/parser/Parser'
 const {proxy} = getCurrentInstance();
 
-const vFormRef = ref(null);
+const vFormRef = ref();
 const formConf = ref({}) // 默认表单数据
 const formConfOpen = ref(false)
 const formTitle = ref("")
-const vfdRef = ref(null)
+// const vfdRef = ref(null)
 
 const formList = ref([]);
 const open = ref(false);
@@ -175,6 +175,8 @@ const data = reactive({
 
 const {queryParams, form, rules} = toRefs(data);
 
+onMounted(() => {
+})
 /** 查询流程表单列表 */
 function getList() {
   loading.value = true;

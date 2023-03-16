@@ -1,9 +1,9 @@
-
-
 /**
  * 通用js方法封装处理
  * Copyright (c) 2019 ruoyi
  */
+import {getCurrentInstance} from "vue";
+
 
 // 日期格式化
 export function parseTime(time:any, pattern:any) {
@@ -48,9 +48,11 @@ export function parseTime(time:any, pattern:any) {
 
 // 表单重置
 export function resetForm(refName:any) {
-  // if (this.$refs[refName]) {
-  //   this.$refs[refName].resetFields();
-  // }
+  // @ts-ignore
+  const { proxy } = getCurrentInstance();
+  if (proxy.$refs[refName]) {
+    proxy.$refs[refName].resetFields();
+  }
 }
 
 // 添加日期范围

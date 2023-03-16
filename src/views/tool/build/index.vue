@@ -40,6 +40,11 @@ import {ref, reactive} from 'vue'
 const { proxy } = getCurrentInstance();
 const formTitle = ref("")
 const formOpen = ref(false);
+
+
+// const emptyActiveData = { style: {}, autosize: {} }
+// let oldActiveId
+// let tempActiveData
 let idGlobal = getIdGlobal()
 
 
@@ -74,15 +79,21 @@ const testBanned = ref([
   // 'alert',
 ])
 const designerConfig = reactive({
-  languageMenu: true,
-  //externalLink: false,
+  languageMenu: false,
+  externalLink: false,
   //formTemplates: false,
   //eventCollapse: false,
   //clearDesignerButton: false,
   //previewFormButton: false,
-  generateSFCButton: false
+  generateSFCButton: false,
+  logoHeader: false,
   //presetCssCode: '.abc { font-size: 16px; }',
 })
+
+
+// watch(activeId, (val) => {
+//   oldActiveId = val
+// }, {immediate: true})
 
 onMounted(() => {
   const formId =  proxy.$route.query && proxy.$route.query.formId;
@@ -152,6 +163,14 @@ function submitForm(){
 }
 </script>
 
+<style>
+/*.main-title{*/
+/*  display: none !important;*/
+/*}*/
+.el-header.main-header{
+  display: none !important;
+}
+</style>
 <!--<script setup>-->
 <!--import 'vform3-builds/dist/designer.style.css'  //引入VForm3样式-->
 <!--const vfdRef = ref(null)-->
