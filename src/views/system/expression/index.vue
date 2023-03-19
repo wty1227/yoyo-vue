@@ -83,7 +83,7 @@
       <el-table-column label="表达式内容" align="center" prop="expression"/>
       <el-table-column label="备注" align="center" prop="remark"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
               
               type="text"
@@ -185,7 +185,7 @@ const {queryParams, form, rules} = toRefs(data);
 /** 查询流程达式列表 */
 function getList() {
   loading.value = true;
-  listExpression(queryParams).then(response => {
+  listExpression(queryParams.value).then(response => {
     console.log('expression:', response)
     expressionList.value = response.rows;
     total.value = response.total;

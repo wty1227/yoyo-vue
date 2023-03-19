@@ -25,7 +25,8 @@ const useSettingsStore = defineStore(
       // 修改布局设置
       changeSetting(data:any) {
         const { key, value } = data
-        if (this.hasOwnProperty(key)) {
+        // if (hasOwnProperty(key))
+        {
           // @ts-ignore
           this[key] = value
         }

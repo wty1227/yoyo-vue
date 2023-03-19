@@ -1,5 +1,6 @@
 import router from './router'
 import { ElMessage } from 'element-plus'
+// @ts-ignore
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'
 import { getToken } from '@/utils/auth'
@@ -27,6 +28,7 @@ router.beforeEach((to, from, next) => {
         // 判断当前用户是否已拉取完user_info信息
         useUserStore().getInfo().then(() => {
           isRelogin.show = false
+          // @ts-ignore
           usePermissionStore().generateRoutes().then((accessRoutes:any) => {
             // 根据roles权限生成可访问的路由表
             accessRoutes.forEach((route:any) => {

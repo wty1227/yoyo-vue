@@ -38,9 +38,9 @@ import Parser from '@/components/parser/Parser'
 import {definitionStart, flowXmlAndNode} from "@/api/flowable/definition.js";
 import flow from './flow'
 import {flowFormData} from "@/api/flowable/process.js";
-import {getNextFlowNodeByStart} from "@/api/flowable/todo.js";
-import FlowUser from '@/components/flow/User'
-import FlowRole from '@/components/flow/Role'
+import {getNextFlowNodeByStart} from "@/api/flowable/todo.ts";
+import FlowUser from '@/components/flow/User.vue'
+import FlowRole from '@/components/flow/Role.vue'
 
 export default {
   name: "Record",

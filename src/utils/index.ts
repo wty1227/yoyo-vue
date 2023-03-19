@@ -1,16 +1,42 @@
 import { parseTime } from './ruoyi'
 
+
+/**
+ * region bpmn
+ */
+import EmptyXML from '@/utils/EmptyXML'
+import { EditorSettings } from '@/types/editor/settings'
+import modelerStore from '@/store/modeler'
+
+export const createNewDiagram = async function (newXml?: string, settings?: EditorSettings) {
+  try {
+    const store = modelerStore()
+    const timestamp = Date.now()
+    const { processId, processName, processEngine } = settings || {}
+    const newId: string = processId ? processId : `Process_${timestamp}`
+    const newName: string = processName || `业务流程_${timestamp}`
+    const xmlString = newXml || EmptyXML(newId, newName, processEngine)
+    const modeler = store.getModeler
+    const { warnings } = await modeler!.importXML(xmlString)
+    if (warnings && warnings.length) {
+      warnings.forEach((warn) => console.warn(warn))
+    }
+  } catch (e) {
+    console.error(`[Process Designer Warn]: ${typeof e === 'string' ? e : (e as Error)?.message}`)
+  }
+}
+// endregion
 /**
  * 表格时间格式化
  */ // @ts-ignore // @ts-ignore
 export function formatDate(cellValue:any) {
   if (cellValue == null || cellValue == "") return "";
-  var date = new Date(cellValue) 
+  var date = new Date(cellValue)
   var year = date.getFullYear()
   var month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
-  var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate() 
-  var hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours() 
-  var minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes() 
+  var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+  var hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours()
+  var minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
   var seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
   return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
 }
@@ -343,7 +369,7 @@ export function makeMap(str, expectsLowerCase) {
     ? (val:any) => map[val.toLowerCase()]
     : (val:any) => map[val]
 }
- 
+
 export const exportDefault = 'export default '
 
 export const beautifierConf = {
@@ -404,4 +430,4 @@ export function camelCase(str) {
 export function isNumberStr(str) {
   return /^[+-]?(0|([1-9]\d*))(\.\d+)?$/g.test(str)
 }
- 
+

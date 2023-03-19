@@ -46,18 +46,18 @@
       <el-table-column label="流程名称" align="center" prop="procDefName"/>
       <el-table-column label="当前节点" align="center" prop="taskName"/>
       <el-table-column label="流程版本" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tag size="medium" >v{{scope.row.procDefVersion}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="流程发起人" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <label>{{scope.row.startUserName}} <el-tag type="info" size="mini">{{scope.row.startDeptName}}</el-tag></label>
         </template>
       </el-table-column>
       <el-table-column label="接收时间" align="center" prop="createTime" width="180"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
             size="mini"
             type="text"
@@ -89,7 +89,7 @@ import {
   getDeployment,
   delDeployment,
   exportDeployment
-} from "@/api/flowable/todo.js";
+} from "@/api/flowable/todo.ts";
 
 export default {
   name: "Deploy",

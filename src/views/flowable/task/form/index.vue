@@ -1,12 +1,13 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" @submit.native.prevent>
       <el-form-item label="表单名称" prop="formName">
         <el-input
             v-model="queryParams.formName"
             placeholder="请输入表单名称"
             clearable
-            @keyup.enter.native="handleQuery"
+            style="width: 200px"
+            @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item>
@@ -62,7 +63,7 @@
         >导出
         </el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="formList" @selection-change="handleSelectionChange">
@@ -79,17 +80,17 @@
           >详情
           </el-button>
           <el-button
-
-              type="text"
-              icon="edit"
+              link
+              type="primary"
+              icon="Edit"
               @click="handleUpdate(scope.row)"
               v-hasPermi="['flowable:form:edit']"
           >修改
           </el-button>
           <el-button
-
-              type="text"
-              icon="delete"
+              link
+              type="primary"
+              icon="Delete"
               @click="handleDelete(scope.row)"
               v-hasPermi="['flowable:form:remove']"
           >删除
@@ -180,7 +181,7 @@ onMounted(() => {
 /** 查询流程表单列表 */
 function getList() {
   loading.value = true;
-  listForm(queryParams).then(response => {
+  listForm(queryParams.value).then(response => {
     formList.value = response.rows;
     total.value = response.total;
     loading.value = false;
@@ -205,18 +206,18 @@ function reset() {
     updateBy: null,
     remark: null
   };
-  resetForm("sheetRef");
+  proxy.resetForm("sheetRef");
 }
 
 /** 搜索按钮操作 */
 function handleQuery() {
-  queryParams.pageNum = 1;
+  queryParams.value.pageNum = 1;
   getList();
 }
 
 /** 重置按钮操作 */
 function resetQuery() {
-  resetForm("queryForm");
+  proxy.resetForm("queryRef");
   handleQuery();
 }
 
@@ -295,15 +296,15 @@ function handleDelete(row) {
 
 /** 导出按钮操作 */
 function handleExport() {
-  const queryParams = queryParams;
+  // const queryParams = queryParams;
   proxy.$confirm('是否确认导出所有流程表单数据项?', "警告", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning"
   }).then(function () {
-    return exportForm(queryParams);
+    return exportForm(queryParams.value);
   }).then(response => {
-    download(response.msg);
+    proxy.download(response.msg);
   })
 }
 

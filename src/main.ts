@@ -6,12 +6,13 @@ import router from "./router";
 import './permission' // permission control
 // import { createPinia } from 'pinia'
 import store from "@/store";
-
+import directive from './directive/index' // directive
 
 // @ts-ignore
 import Cookies from 'js-cookie'
 
-
+import i18n from '@/i18n'
+import './styles/index.scss'
 // 注册指令
 import plugins from './plugins' // plugins
 import { download } from '@/utils/request'
@@ -31,6 +32,75 @@ import 'vform3-builds/dist/designer.style.css'  //引入VForm3样式
 
 
 
+import {
+    createDiscreteApi,
+    create,
+    NColorPicker,
+    NConfigProvider,
+    NMessageProvider,
+    NDialogProvider,
+    NButton,
+    NButtonGroup,
+    NTag,
+    NCollapse,
+    NCollapseItem,
+    NDataTable,
+    NPopover,
+    NDrawer,
+    NDrawerContent,
+    NModal,
+    NCode,
+    NForm,
+    NFormItem,
+    NInput,
+    NInputNumber,
+    NRadio,
+    NRadioGroup,
+    NCheckbox,
+    NCheckboxGroup,
+    NSelect,
+    NSwitch
+} from 'naive-ui'
+
+const naive = create({
+    components: [
+        NColorPicker,
+        NConfigProvider,
+        NMessageProvider,
+        NDialogProvider,
+        NButton,
+        NButtonGroup,
+        NTag,
+        NCollapse,
+        NCollapseItem,
+        NDataTable,
+        NPopover,
+        NDrawer,
+        NDrawerContent,
+        NModal,
+        NCode,
+        NForm,
+        NFormItem,
+        NInput,
+        NInputNumber,
+        NRadio,
+        NRadioGroup,
+        NCheckbox,
+        NCheckboxGroup,
+        NSelect,
+        NSwitch
+    ]
+})
+const { message, notification, dialog, loadingBar } = createDiscreteApi([
+    'message',
+    'dialog',
+    'notification',
+    'loadingBar'
+])
+window.__messageBox = message
+
+
+
 import { useDict } from '@/utils/dict'
 import { parseTime, resetForm, addDateRange, handleTree, selectDictLabel, selectDictLabels } from '@/utils/ruoyi'
 
@@ -46,12 +116,15 @@ app.config.globalProperties.addDateRange = addDateRange
 app.config.globalProperties.selectDictLabel = selectDictLabel
 app.config.globalProperties.selectDictLabels = selectDictLabels
 
-
+app.use(i18n)
+app.use(naive)
 app.use(store)
 app.use(router)
 app.use(plugins)
 app.use(elementIcons)
 app.component('svg-icon', SvgIcon)
+
+directive(app)
 // 使用element-plus 并且设置全局的大小
 // @ts-ignore
 // app.use(ElementPlus, {

@@ -332,6 +332,7 @@
 <script setup name="User">
 import { getToken } from "@/utils/auth";
 import { changeUserStatus, listUser, resetUserPwd, delUser, getUser, updateUser, addUser, deptTreeSelect } from "@/api/system/user";
+import {onMounted} from "vue";
 
 const router = useRouter();
 const { proxy } = getCurrentInstance();
@@ -399,6 +400,9 @@ const data = reactive({
 
 const { queryParams, form, rules } = toRefs(data);
 
+onMounted(()=>{
+
+})
 /** 通过条件过滤节点  */
 const filterNode = (value, data) => {
   if (!value) return true;

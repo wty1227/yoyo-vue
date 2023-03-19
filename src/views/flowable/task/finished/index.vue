@@ -45,7 +45,7 @@
       <el-table-column label="流程名称" align="center" prop="procDefName" :show-overflow-tooltip="true"/>
       <el-table-column label="任务节点" align="center" prop="taskName" />
       <el-table-column label="流程发起人" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <label>{{scope.row.startUserName}} <el-tag type="info" size="mini">{{scope.row.startDeptName}}</el-tag></label>
         </template>
       </el-table-column>
@@ -53,7 +53,7 @@
       <el-table-column label="审批时间" align="center" prop="finishTime" width="180"/>
       <el-table-column label="耗时" align="center" prop="duration" width="180"/>
       <el-table-column label="操作" width="150" fixed="right" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
             size="mini"
             type="text"

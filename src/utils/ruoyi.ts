@@ -49,9 +49,10 @@ export function parseTime(time:any, pattern:any) {
 // 表单重置
 export function resetForm(refName:any) {
   // @ts-ignore
-  const { proxy } = getCurrentInstance();
-  if (proxy.$refs[refName]) {
-    proxy.$refs[refName].resetFields();
+  // const { proxy } = getCurrentInstance();
+  if (this.$refs[refName]) {
+    // @ts-ignore
+    this.$refs[refName].resetFields();
   }
 }
 

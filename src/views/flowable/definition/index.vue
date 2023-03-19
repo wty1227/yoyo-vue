@@ -59,7 +59,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
     <el-alert title="流程设计说明" type="success">
-      <template slot='title'>
+      <template #default='title'>
         <p>流程设计说明:</p>
         <div>1、XML文件中的流程定义id属性用作流程定义的key参数。</div>
         <div>2、XML文件中的流程定义name属性用作流程定义的name参数。如果未给定name属性，会使用id作为name。</div>
@@ -77,14 +77,14 @@
       <el-table-column label="流程标识" align="center" prop="flowKey" :show-overflow-tooltip="true"/>
       <el-table-column label="流程分类" align="center" prop="category"/>
       <el-table-column label="流程名称" align="center" width="120" :show-overflow-tooltip="true">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button type="text" @click="handleReadImage(scope.row.deploymentId)">
             <span>{{ scope.row.name }}</span>
           </el-button>
         </template>
       </el-table-column>
       <el-table-column label="业务表单" align="center" :show-overflow-tooltip="true">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button v-if="scope.row.formId" type="text" @click="handleForm(scope.row.formId)">
             <span>{{ scope.row.formName }}</span>
           </el-button>
@@ -92,19 +92,19 @@
         </template>
       </el-table-column>
       <el-table-column label="流程版本" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tag size="medium">v{{ scope.row.version }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="状态" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tag type="success" v-if="scope.row.suspensionState === 1">激活</el-tag>
           <el-tag type="warning" v-if="scope.row.suspensionState === 2">挂起</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="部署时间" align="center" prop="deploymentTime" width="180"/>
       <el-table-column label="操作" width="250" fixed="right" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button @click="handleLoadXml(scope.row)" icon="el-icon-edit-outline" type="text" size="small">设计
           </el-button>
           <el-button @click="handleAddForm(scope.row)" icon="el-icon-edit-el-icon-s-promotion" type="text" size="small"
@@ -132,7 +132,7 @@
     />
 
     <!-- 添加或修改流程定义对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="看看" prop="name">
           <el-input v-model="form.name" placeholder="请输入看看"/>
@@ -145,7 +145,7 @@
     </el-dialog>
 
     <!-- bpmn20.xml导入对话框 -->
-    <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
+    <el-dialog :title="upload.title" v-model="upload.open" width="400px" append-to-body>
       <el-upload
           ref="upload"
           :limit="1"
@@ -188,20 +188,22 @@
     </el-dialog>
 
     <!-- 流程图 -->
-    <el-dialog :title="readImage.title" :visible.sync="readImage.open" width="70%" append-to-body>
+    <el-dialog :title="readImage.title" v-model="readImage.open" width="70%" append-to-body>
       <!-- <el-image :src="readImage.src"></el-image> -->
       <flow :flowData="flowData"/>
     </el-dialog>
 
     <!--表单配置详情-->
-    <el-dialog :title="formTitle" :visible.sync="formConfOpen" width="50%" append-to-body>
+    <el-dialog :title="formTitle" v-model="formConfOpen" width="50%" append-to-body>
       <div class="test-form">
 <!--        <parser :key="new Date().getTime()" :form-conf="formConf"/>-->
+        <v-form-render :form-json="formConf" ref="vFormRef">
+        </v-form-render>
       </div>
     </el-dialog>
 
     <!--挂载表单-->
-    <el-dialog :title="formDeployTitle" :visible.sync="formDeployOpen" width="60%" append-to-body>
+    <el-dialog :title="formDeployTitle" v-model="formDeployOpen" width="60%" append-to-body>
       <el-row :gutter="24">
         <el-col :span="10" :xs="24">
           <el-table
@@ -214,7 +216,7 @@
             <el-table-column label="表单编号" align="center" prop="formId"/>
             <el-table-column label="表单名称" align="center" prop="formName"/>
             <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-              <template slot-scope="scope">
+              <template #default="scope">
                 <el-button size="mini" type="text" @click="submitFormDeploy(scope.row)">确定</el-button>
               </template>
             </el-table-column>
@@ -239,7 +241,7 @@
     <!--    &lt;!&ndash;流程设计器&ndash;&gt;-->
     <!--    <el-dialog-->
     <!--      title="流程配置"-->
-    <!--      :visible.sync="dialogVisible"-->
+    <!--      v-model="dialogVisible"-->
     <!--      :close-on-press-escape="false"-->
     <!--      :fullscreen=true-->
     <!--      :before-close="handleClose"-->
@@ -295,7 +297,7 @@ const upload = ref({
   // 设置上传的请求头部
   headers: {Authorization: "Bearer " + getToken()},
   // 上传的地址
-  url: process.env.VUE_APP_BASE_API + "/flowable/definition/import"
+  url: import.meta.env.VUE_APP_BASE_API + "/flowable/definition/import"
 })
 
 
@@ -343,7 +345,9 @@ const data = reactive({
   // 表单校验
   rules: {}
 });
-const {queryParams, form, rules, ormQueryParams, formDeployParam, deployId, currentRow, flowData} = toRefs(data);
+const {queryParams, form, rules, formQueryParams, formDeployParam, deployId, currentRow, flowData} = toRefs(data);
+onMounted(() => {
+})
 
 function activated() {
   const time = proxy.$route.query.t;
@@ -356,8 +360,9 @@ function activated() {
 function getList() {
   loading.value = true;
   listDefinition(queryParams.value).then(response => {
-    this.definitionList = response.data.records;
-    this.total = response.data.total;
+    console.log(response)
+    definitionList.value = response.data.records;
+    total.value = response.data.total;
     loading.value = false;
   });
 }
@@ -444,7 +449,9 @@ function handleForm(formId) {
   getForm(formId).then(res => {
     formTitle.value = "表单详情";
     formConfOpen.value = true;
+    // formConf.value = JSON.parse(res.data.formContent)
     formConf.value = JSON.parse(res.data.formContent)
+    vFormRef.value.setFormJson(JSON.parse(res.data.formContent))
   })
 }
 
@@ -463,7 +470,7 @@ function handleAddForm(row) {
 
 /** 挂载表单列表 */
 function ListFormDeploy() {
-  listForm(this.formQueryParams).then(res => {
+  listForm(formQueryParams.value).then(res => {
     formList.value = res.rows;
     formTotal.value = res.total;
     formDeployOpen.value = true;
@@ -579,19 +586,19 @@ function handleExport() {
 
 /** 导入bpmn.xml文件 */
 function handleImport() {
-  this.upload.title = "bpmn20.xml文件导入";
-  this.upload.open = true;
+  upload.value.title = "bpmn20.xml文件导入";
+  upload.value.open = true;
 }
 
 // 文件上传中处理
 function handleFileUploadProgress(event, file, fileList) {
-  this.upload.isUploading = true;
+  upload.value.isUploading = true;
 }
 
 // 文件上传成功处理
 function handleFileSuccess(response, file, fileList) {
-  this.upload.open = false;
-  this.upload.isUploading = false;
+  upload.value.open = false;
+  upload.value.isUploading = false;
   proxy.$refs.upload.clearFiles();
   proxy.$message(response.msg);
   getList();

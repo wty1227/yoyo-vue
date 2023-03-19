@@ -241,7 +241,7 @@ const {queryParams, form, rules, taskListenerEventList, executionListenerEventLi
 /** 查询流程监听列表 */
 function getList() {
   loading.value = true;
-  listListener(queryParams).then(response => {
+  listListener(queryParams.value).then(response => {
     console.log('listener:', response)
     console.log(response.rows)
     listenerList.value = response.rows;

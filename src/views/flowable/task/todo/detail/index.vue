@@ -151,7 +151,7 @@ import {
   getNextFlowNode,
   delegate,
   flowTaskForm,
-} from "@/api/flowable/todo.js";
+} from "@/api/flowable/todo.ts";
 import flow from '@/views/flowable/task/todo/detail/flow'
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import {listUser} from "@/api/system/user";

@@ -1,36 +1,37 @@
 <template>
+  <div class="app-container">
+    <v-form-designer ref="vfDesigner" :field-list-api="fieldListApi" :banned-widgets="testBanned"
+                     :designer-config="designerConfig">
+      <!-- 自定义按钮插槽演示 -->
+      <template #customToolButtons>
+        <el-button
+            type="primary"
+            icon="Share"
+            @click="handleForm"
+        >保存</el-button>
+      </template>
+    </v-form-designer>
 
-<!--  <v-form-designer ref="vfdRef">  </v-form-designer>-->
-  <v-form-designer ref="vfDesigner" :field-list-api="fieldListApi" :banned-widgets="testBanned"
-                   :designer-config="designerConfig">
-    <!-- 自定义按钮插槽演示 -->
-    <template #customToolButtons>
-      <el-button
-          type="primary"
-          icon="Share"
-          @click="handleForm"
-      >保存</el-button>
-    </template>
-  </v-form-designer>
+    <!--表单配置详情-->
+    <el-dialog :title="formTitle" v-model="formOpen" width="500px" append-to-body>
+      <el-form ref="tabNameRef" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="表单名称" prop="formName">
+          <el-input v-model="form.formName" placeholder="请输入表单名称" />
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="form.remark" placeholder="请输入备注" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+  </div>
 
-  <!--表单配置详情-->
-  <el-dialog :title="formTitle" v-model="formOpen" width="500px" append-to-body>
-    <el-form ref="tabNameRef" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="表单名称" prop="formName">
-        <el-input v-model="form.formName" placeholder="请输入表单名称" />
-      </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="form.remark" placeholder="请输入备注" />
-      </el-form-item>
-    </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="submitForm">确 定</el-button>
-      <el-button @click="cancel">取 消</el-button>
-    </div>
-  </el-dialog>
 </template>
 
-<script setup>
+<script setup name="FormBuild">
 import {getForm, addForm, updateForm} from "@/api/flowable/form";
 import {
   getDrawingList, saveDrawingList, getIdGlobal, saveIdGlobal, getFormConf
@@ -154,7 +155,7 @@ function submitForm(){
       }
       // this.drawingList = []
       idGlobal = 100
-      open.value = false;
+      // open.value = false;
       // 关闭当前标签页并返回上个页面
       const obj = { path: "/flowable/form", query: { t: Date.now()} };
       proxy.$tab.closeOpenPage(obj);
@@ -164,20 +165,7 @@ function submitForm(){
 </script>
 
 <style>
-/*.main-title{*/
-/*  display: none !important;*/
-/*}*/
 .el-header.main-header{
   display: none !important;
 }
 </style>
-<!--<script setup>-->
-<!--import 'vform3-builds/dist/designer.style.css'  //引入VForm3样式-->
-<!--const vfdRef = ref(null)-->
-<!--</script>-->
-
-<!--<style lang="scss">-->
-<!--body {-->
-<!--  margin: 0;  /* 如果页面出现垂直滚动条，则加入此行CSS以消除之 */-->
-<!--}-->
-<!--</style>-->
