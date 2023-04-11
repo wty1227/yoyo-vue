@@ -40,7 +40,7 @@
             plain
             icon="el-icon-plus"
             size="mini"
-            @click="handleLoadXml"
+            @click="handleAdd"
         >新增
         </el-button>
       </el-col>
@@ -246,7 +246,7 @@
     <!--      :fullscreen=true-->
     <!--      :before-close="handleClose"-->
     <!--      append-to-body>-->
-    <!--      <Model :deployId="deployId"/>-->
+    <!--      <Index :deployId="deployId"/>-->
     <!--    </el-dialog>-->
   </div>
 </template>
@@ -268,7 +268,7 @@ import {getToken} from "@/utils/auth";
 import {getForm, addDeployForm, listForm} from "@/api/flowable/form.ts";
 // import Parser from '@/components/parser/Parser'
 // import flow from '@/views/flowable/task/myProcess/send/flow'
-// import Model from './model';
+// import Index from './model';
 
 const {sys_process_category} = proxy.useDict("sys_process_category");
 
@@ -422,16 +422,33 @@ function handleSelectionChange(selection) {
 
 /** 新增按钮操作 */
 function handleAdd() {
-  this.reset();
-  open.value = true;
-  title.value = "添加流程定义";
+  // this.reset();
+  // open.value = true;
+  // title.value = "添加流程定义";
+  // proxy.$router.push({path: '/flowable/definition/model', query: {deployId: null}})
+  const url = proxy.$router.resolve({
+    name: 'Model',
+    query: {
+      deployId: null
+    }
+  })
+  console.log(url)
+  window.open(url.href)
 }
 
 /** 跳转到流程设计页面 */
 function handleLoadXml(row) {
   // this.dialogVisible = true;
   // this.deployId = row.deploymentId;
-  proxy.$router.push({path: '/flowable/definition/model', query: {deployId: row.deploymentId}})
+  // proxy.$router.push({path: '/flowable/definition/model', query: {deployId: row.deploymentId}})
+  const url = proxy.$router.resolve({
+    name: 'Model',
+    query: {
+      deployId: row.deploymentId
+    }
+  })
+  console.log(url)
+  window.open(url.href)
 }
 
 /** 流程图查看 */

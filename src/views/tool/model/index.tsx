@@ -16,7 +16,7 @@ import {NConfigProvider, NDialogProvider, NMessageProvider} from 'naive-ui'
 hljs.registerLanguage('xml', xml)
 hljs.registerLanguage('json', json)
 
-const Model = defineComponent({
+const Index = defineComponent({
     setup() {
         const editorSettings = ref<EditorSettings>({...defaultSettings})
 
@@ -72,4 +72,4 @@ const Model = defineComponent({
     }
 })
 
-export default Model
+export default Index

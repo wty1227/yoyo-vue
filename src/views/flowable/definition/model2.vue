@@ -31,7 +31,7 @@ import {onMounted, toRefs} from "vue";
 const {proxy} = getCurrentInstance();
 const { sys_process_category } = proxy.useDict("sys_process_category");
 // export default {
-//   name: "Model",
+//   name: "Index",
 //   components: {
 //     bpmnModeler,
 //     vkBeautify

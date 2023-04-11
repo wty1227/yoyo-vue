@@ -137,7 +137,6 @@ const updateStatusList = [
   {label: '会签同意', value: 4},
 ]
 const state = reactive({
-  elementId: '',
   elementName: '',
   elementVersion: '',
   elementExecutable: true,

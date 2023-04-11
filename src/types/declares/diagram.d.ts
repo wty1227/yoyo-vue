@@ -901,7 +901,7 @@ declare module 'diagram-js/lib/draw/Styles' {
     computeStyle(custom?: Object | null, traits?: string[] | Traits, defaultStyles?: Object): Traits
   }
 }
-/************************************** Diagram Model 元素 声明 *****************************************/
+/************************************** Diagram Index 元素 声明 *****************************************/
 // 元素模型定义
 declare module 'diagram-js/lib/model' {
   import { KeyboardConfig } from 'diagram-js/lib/features/keyboard/Keyboard'

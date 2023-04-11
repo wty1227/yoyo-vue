@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import {Layout} from "@/layout";
-
+// import {Layout} from "@/layout/index1";
+import Layout from "@/layout/index.vue"
 /**
  * Note: 路由配置项
  *
@@ -92,19 +92,6 @@ export const constantRoutes = [
         hidden: true,
         children: [
             {
-                path: 'definition/model/',
-                component: () => import('@/views/flowable/definition/model.js'),
-                name: 'Model',
-                meta: { title: '流程设计', icon: '' }
-            }
-        ]
-    },
-    {
-        path: '/flowable',
-        component: Layout,
-        hidden: true,
-        children: [
-            {
                 path: 'task/finished/detail/index',
                 component: () => import('@/views/flowable/task/finished/detail/index.vue'),
                 name: 'FinishedRecord',
@@ -165,8 +152,21 @@ export const constantRoutes = [
         ]
     },
     {
+        path: '/flowable',
+        // component: Layout,
+        hidden: true,
+        children: [
+            {
+                path: 'definition/model',
+                component: () => import('@/views/tool/model'),
+                name: 'Model',
+                meta: { title: '流程设计2', icon: '' }
+            }
+        ]
+    },
+    {
         path: '/test1',
-        component: () => import('@/views/flowable/definition/model'),
+        component: () => import('@/views/tool/model'),
         hidden: true
     },
 ]
