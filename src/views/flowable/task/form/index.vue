@@ -139,6 +139,8 @@
 
 <script setup name="Form">
 import {listForm, getForm, delForm, addForm, updateForm, exportForm} from "@/api/flowable/form.ts";
+import {getCurrentInstance, onMounted, reactive, ref, toRefs} from "vue";
+import {resetForm} from "@/utils/ruoyi";
 // import Editor from '@/components/Editor/index.vue';
 // import Parser from '@/components/parser/Parser'
 const {proxy} = getCurrentInstance();

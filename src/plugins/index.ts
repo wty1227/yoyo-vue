@@ -1,8 +1,8 @@
 import tab from './tab'
-import auth from './auth.js'
-import cache from './cache.js'
+import auth from './auth'
+import cache from './cache'
 import modal from './modal'
-import download from './download.js'
+import download from './download'
 
 export default function installPlugins(app:any){
   // 页签操作

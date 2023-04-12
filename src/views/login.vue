@@ -113,6 +113,7 @@ function handleLogin() {
       }
       // 调用action的登录方法
       userStore.login(loginForm.value).then(() => {
+        console.log('login success.')
         router.push({ path: redirect.value || "/" });
       }).catch(() => {
         loading.value = false;
@@ -127,6 +128,7 @@ function handleLogin() {
 
 function getCode() {
   getCodeImg().then(res => {
+    console.log('getcode:', res)
     captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled;
     if (captchaEnabled.value) {
       codeUrl.value = "data:image/gif;base64," + res.img;

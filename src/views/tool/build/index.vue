@@ -37,7 +37,7 @@ import {
   getDrawingList, saveDrawingList, getIdGlobal, saveIdGlobal, getFormConf
 } from '@/utils/db'
 
-import {ref, reactive} from 'vue'
+import {ref, reactive, getCurrentInstance} from 'vue'
 const { proxy } = getCurrentInstance();
 const formTitle = ref("")
 const formOpen = ref(false);

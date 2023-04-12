@@ -196,7 +196,7 @@
     <!--表单配置详情-->
     <el-dialog :title="formTitle" v-model="formConfOpen" width="50%" append-to-body>
       <div class="test-form">
-<!--        <parser :key="new Date().getTime()" :form-conf="formConf"/>-->
+        <!--        <parser :key="new Date().getTime()" :form-conf="formConf"/>-->
         <v-form-render :form-json="formConf" ref="vFormRef">
         </v-form-render>
       </div>
@@ -232,7 +232,7 @@
         </el-col>
         <el-col :span="14" :xs="24">
           <div v-if="currentRow">
-<!--            <parser :key="new Date().getTime()" :form-conf="currentRow"/>-->
+            <!--            <parser :key="new Date().getTime()" :form-conf="currentRow"/>-->
           </div>
         </el-col>
       </el-row>

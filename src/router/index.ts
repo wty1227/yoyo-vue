@@ -151,19 +151,19 @@ export const constantRoutes = [
             }
         ]
     },
-    {
-        path: '/flowable',
-        // component: Layout,
-        hidden: true,
-        children: [
-            {
-                path: 'definition/model',
-                component: () => import('@/views/tool/model'),
-                name: 'Model',
-                meta: { title: '流程设计2', icon: '' }
-            }
-        ]
-    },
+    // {
+    //     path: '/flowable',
+    //     // component: Layout,
+    //     hidden: true,
+    //     children: [
+    //         {
+    //             path: 'definition/model',
+    //             component: () => import('@/views/tool/model'),
+    //             name: 'Model',
+    //             meta: { title: '流程设计2', icon: '' }
+    //         }
+    //     ]
+    // },
     {
         path: '/test1',
         component: () => import('@/views/tool/model'),
