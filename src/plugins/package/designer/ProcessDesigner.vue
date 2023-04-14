@@ -103,11 +103,11 @@ import camundaModdleDescriptor from "./plugins/descriptor/camundaDescriptor.json
 import activitiModdleDescriptor from "./plugins/descriptor/activitiDescriptor.json";
 import flowableModdleDescriptor from "./plugins/descriptor/flowableDescriptor.json";
 // 标签解析 Extension
-import camundaModdleExtension from "./plugins/extension-moddle/camunda";
-import activitiModdleExtension from "./plugins/extension-moddle/activiti";
-import flowableModdleExtension from "./plugins/extension-moddle/flowable";
+import camundaModdleExtension from "./plugins/extension-moddle/camunda/extension.js";
+import activitiModdleExtension from "./plugins/extension-moddle/activiti/activitiExtension.js";
+import flowableModdleExtension from "./plugins/extension-moddle/flowable/flowableExtension.js";
 // 引入json转换与高亮
-import convert from "xml-js";
+// import convert from "xml-js";
 
 export default {
   name: "BpmnProcessDesigner",
@@ -455,7 +455,9 @@ export default {
     },
     previewProcessJson() {
       this.bpmnModeler.saveXML({ format: true }).then(({ xml }) => {
-        this.previewResult = convert.xml2json(xml, { spaces: 2 });
+
+        // this.previewResult = convert.xml2json(xml, { spaces: 2 });
+
         this.previewType = "json";
         this.previewModelVisible = true;
       });

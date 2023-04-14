@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import UserTask from "./task-components/UserTask";
-import ServiceTask from "./task-components/ServiceTask";
-import ScriptTask from "./task-components/ScriptTask";
-import ReceiveTask from "./task-components/ReceiveTask";
+import UserTask from "./task-components/UserTask.vue";
+import ServiceTask from "./task-components/ServiceTask.vue";
+import ScriptTask from "./task-components/ScriptTask.vue";
+import ReceiveTask from "./task-components/ReceiveTask.vue";
 
 export default {
   name: "ElementTaskConfig",

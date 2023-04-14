@@ -45,16 +45,16 @@
   </div>
 </template>
 <script>
-import ElementBaseInfo from "./base/ElementBaseInfo";
-import ElementOtherConfig from "./other/ElementOtherConfig";
-import ElementTask from "./task/ElementTask";
-import ElementMultiInstance from "./multi-instance/ElementMultiInstance";
-import FlowCondition from "./flow-condition/FlowCondition";
-import SignalAndMassage from "./signal-message/SignalAndMessage";
-import ElementListeners from "./listeners/ElementListeners";
-import ElementProperties from "./properties/ElementProperties";
-import ElementForm from "./form/ElementForm";
-import UserTaskListeners from "./listeners/UserTaskListeners";
+import ElementBaseInfo from "./base/ElementBaseInfo.vue";
+import ElementOtherConfig from "./other/ElementOtherConfig.vue";
+import ElementTask from "./task/ElementTask.vue";
+import ElementMultiInstance from "./multi-instance/ElementMultiInstance.vue";
+import FlowCondition from "./flow-condition/FlowCondition.vue";
+import SignalAndMassage from "./signal-message/SignalAndMessage.vue";
+import ElementListeners from "./listeners/ElementListeners.vue";
+import ElementProperties from "./properties/ElementProperties.vue";
+import ElementForm from "./form/ElementForm.vue";
+import UserTaskListeners from "./listeners/UserTaskListeners.vue";
 /**
  * 侧边栏
  * @Author MiyueFE

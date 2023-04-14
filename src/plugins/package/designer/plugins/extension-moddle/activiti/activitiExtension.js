@@ -1,6 +1,7 @@
 "use strict";
 
-var some = require("min-dash").some;
+// var some = require("min-dash").some;
+import {isFunction, isObject, some} from 'min-dash'
 
 var ALLOWED_TYPES = {
   FailedJobRetryTimeCycle: ["bpmn:StartEvent", "bpmn:BoundaryEvent", "bpmn:IntermediateCatchEvent", "bpmn:Activity"],
@@ -71,4 +72,5 @@ ActivitiModdleExtension.prototype.canCloneProperty = function(newElement, propDe
   }
 };
 
-module.exports = ActivitiModdleExtension;
+// module.exports = ActivitiModdleExtension;
+export default ActivitiModdleExtension

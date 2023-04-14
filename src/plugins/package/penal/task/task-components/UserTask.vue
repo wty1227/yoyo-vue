@@ -122,7 +122,7 @@
 <script>
 import { listUser, deptTreeSelect } from "@/api/system/user";
 import { listRole } from "@/api/system/role";
-import TreeSelect from "@/components/TreeSelect";
+import TreeSelect from "@/components/TreeSelect/index.vue";
 
 const userTaskForm = {
   dataType: '',
