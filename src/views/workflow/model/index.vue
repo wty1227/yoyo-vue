@@ -382,7 +382,7 @@ const data = reactive({
     // 设置上传的请求头部
     headers: {Authorization: "Bearer " + getToken()},
     // 上传的地址
-    url: process.env.VUE_APP_BASE_API + "/workflow/definition/import"
+    url: import.meta.env.VUE_APP_BASE_API + "/workflow/definition/import"
   },
   // 查询参数
   queryParams: {
